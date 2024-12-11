@@ -1,12 +1,6 @@
-const form = document.getElementById('form-atividade');
-const imgAprovado = '<img src="./images/aprovado.png" alt="emoji celebrando" />';
-const imgReprovado = '<img src="./images/reprovado.png" alt="emoji decepcionado" />';
-const atividades = [];
-const notas = [];
-const spanAprovado = '<span class="resultado aprovado">Aprovado</span>';
-const spanReprovado = '<span class="resultado Reprovado">Reprovado</span>';
-/*const notaMinima = parseFloat(prompt("Digite a nota mínima:"));*/
-const notaMinima = 7
+const form = document.getElementById('agenda-tel');
+const nomes = [];
+const telefones = [];
 
 let linhas = '';
 
@@ -15,50 +9,31 @@ form.addEventListener('submit', function(e) {
 
     adicionaLinha();
     atualizaTabela();
-    atualizaMediaFinal();
 });
 
 function adicionaLinha() {
-    const inputNomeAtividade = document.getElementById('nome-atividade');
-    const inputNotaAtividade = document.getElementById('nota-atividade');
+    const inputNomeContato = document.getElementById('nome-contato');
+    const inputTelContato = document.getElementById('tel-contato');
 
-    if (atividades.includes(inputNomeAtividade.value)) {
-        alert(`À atividade: ${inputNotaAtividade.value} já foi inserida`);
+    if (nomes.includes(inputNomeContato.value)) {
+        alert(`À atividade: ${inputTelContato.value} já foi inserida`);
     } else {
-        atividades.push(inputNomeAtividade.value);
-        notas.push(parseFloat(inputNotaAtividade.value));
+        nomes.push(inputNomeContato.value);
+        telefones.push(inputTelContato.value);
 
         let linha = '<tr>';
-        linha += `<td>${inputNomeAtividade.value}</td>`;
-        linha += `<td>${inputNotaAtividade.value}</td>`;
-        linha += `<td>${inputNotaAtividade.value >= notaMinima ? imgAprovado : imgReprovado}</td>`;
+        linha += `<td>${inputNomeContato.value}</td>`;
+        linha += `<td>${inputTelContato.value}</td>`;
         linha += '<td>';
     
         linhas += linha;
     }
 
-        inputNomeAtividade.value = '';
-        inputNotaAtividade.value = '';
+        inputNomeContato.value = '';
+        inputTelContato.value = '';
 }
 
 function atualizaTabela()  {
     const corpoTabela = document.querySelector('tbody');
     corpoTabela.innerHTML = linhas;
-}
-
-function atualizaMediaFinal() {
-    const mediaFinal = calculaMediaFinal();
-
-    document.getElementById('media-final-valor').innerHTML = mediaFinal;
-    document.getElementById('media-final-resultado').innerHTML = mediaFinal >= notaMinima ? spanAprovado : spanReprovado;
-}
-
-function calculaMediaFinal() {
-    let somaDasNotas = 0;
-
-    for (let i = 0; i < notas.length; i++) {
-        somaDasNotas += notas[i];
-    }
-
-    return somaDasNotas / notas.length;
 }
